@@ -1,18 +1,28 @@
-module.exports = (db) => {
-  // DEPENDENCIES
-  const express = require("express");
+const express = require("express");
+const http = require("http");
+const WEBCONFIG = require("../data/web-config");
+const DATABASECONFIG = require("../data/db-config");
+const EasyDB = require("@betadv/easy-db");
 
-  // OTHER IMPORTS
-  const config = require("../web-config.json");
+class WebApp {
+  constructor() {
+    this.App = express();
+    this.Server = http.createServer(this.App);
+    this.Config = WEBCONFIG;
+    this.Database = new EasyDB(DATABASECONFIG);
+    this.Database.load();
+  }
 
-  // EXPRESS SETUP
-  const app = express();
+  Run() {
+    const authRouter = require("./routers/auth");
+    this.App.use(express.urlencoded({ extended: false, limit: "5mb" }));
+    this.App.use(express.json());
+    this.App.set("json spaces", 2);
 
-  app.get("/", (req, res) => {
-    res.send("Hello World!");
-  });
+    this.Server.listen(this.Config.port, () =>
+      console.log("Application is listening to port", this.Config.port)
+    );
+  }
+}
 
-  app.listen(config.port, () => {
-    console.log(`application online`);
-  });
-};
+module.exports = WebApp;

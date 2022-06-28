@@ -1,2 +1,6 @@
+// DEPENDENCIES
+const WebApp = require("./webserver/index");
+
 // WEBSERVER
-// require("./webserver/index")();
+const website = new WebApp();
+website.Run();

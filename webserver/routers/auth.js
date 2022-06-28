@@ -22,13 +22,13 @@ const body403_bl = {
 };
 
 /**
- * @param {import("../myApp.js")} app
+ * @param {import("../index.js")} app
  */
 function initRouter(app) {
   const router = express.Router();
 
   router.use(async (req, res, next) => {
-    const key = req.headers["Authorization"];
+    const key = req.query["key"];
     const check = require("../util/authKeyChecker")(app.Database, key);
 
     if (check === "blank")
