@@ -1,1 +1,2 @@
-require("./web/index")();
+// WEBSERVER
+require("./webserver/index")();
