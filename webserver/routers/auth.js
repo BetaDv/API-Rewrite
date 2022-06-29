@@ -1,25 +1,6 @@
 const express = require("express");
 
-const body401_in = {
-  message: "You are unauthorized within our database",
-  serverCode: "Unauthorized",
-  status: "401 - Unauthorized",
-  statusCode: 401,
-};
 
-const body401_bl = {
-  message: "This key does not exist in our database",
-  serverCode: "Unauthorized",
-  status: "401 - Unauthorized",
-  statusCode: 401,
-};
-
-const body403_bl = {
-  message: "Your API Key has been blacklisted from our api",
-  serverCode: "Blacklisted",
-  status: "403 - Forbidden",
-  statusCode: 403,
-};
 
 /**
  * @param {import("../index_old.js")} app

@@ -1,15 +1,14 @@
 /**
  * 
- * @param {import("express").Express} app 
  * @param {import("@betadv/easy-db")} database 
  * @returns 
  */
-module.exports = (app, database) => {
-    /**
-     * @param {import("express").Request} req
-     * @param {import("express").Response} res
-     */
-    return (req, res) => {
-        // Do something
-    }
+module.exports = (app, database) {
+	return {
+		name: "generate",
+	type: "get",
+	run: (req, res) => {
+		// do something here
+	}
+	}
 }

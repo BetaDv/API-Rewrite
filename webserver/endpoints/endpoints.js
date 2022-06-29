@@ -1,17 +1,17 @@
 /**
  * 
- * @param {import("express").Express} app 
  * @param {import("@betadv/easy-db")} database 
  * @returns 
  */
- module.exports = (app, database) => {
-    /**
-     * @param {import("express").Request} req
-     * @param {import("express").Response} res
-     */
-    return (req, res) => {
-        res.json({
-            endpoints: app["Routes"]
-        })
-    }
+module.exports = (app, database) {
+	return {
+		name: "generate",
+	type: "get",
+		options: {
+			useKeyAuth: false
+		}
+	run: async (req, res) => {
+		res.json({ endpoints: app["Routes"})
+	}
+	}
 }
