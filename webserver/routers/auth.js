@@ -1,7 +1,5 @@
 const express = require("express");
 
-
-
 /**
  * @param {import("../index_old.js")} app
  */

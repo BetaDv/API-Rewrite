@@ -3,15 +3,16 @@
  * @param {import("@betadv/easy-db")} database
  * @returns
  */
+
 module.exports = (app, database) => {
   return {
     options: {
-      useKeyAuth: false,
+      useKeyAuth: true,
     },
     name: "generate",
     type: "get",
     run: async (req, res) => {
-      res.json({ endpoints: app["Routes"] });
+      // do something here
     },
   };
 };

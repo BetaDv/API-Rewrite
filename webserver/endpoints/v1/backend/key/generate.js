@@ -1,14 +1,18 @@
 /**
- * 
- * @param {import("@betadv/easy-db")} database 
- * @returns 
+ *
+ * @param {import("@betadv/easy-db")} database
+ * @returns
  */
-module.exports = (app, database) {
-	return {
-		name: "generate",
-	type: "get",
-	run: (req, res) => {
-		// do something here
-	}
-	}
-}
+
+module.exports = (app, database) => {
+  return {
+    options: {
+      useKeyAuth: false,
+    },
+    name: "generate",
+    type: "get",
+    run: async (req, res) => {
+      // do something here
+    },
+  };
+};
