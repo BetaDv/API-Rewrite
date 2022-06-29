@@ -5,6 +5,7 @@ const autoGen = (db,  UID) => {
   return genKey
 };
 
+// generate a key
 const keyGen = (uid, randomSize = 36) => {
   return Buffer.from(uid).toString("base64") + random(randomSize);
 };
@@ -13,6 +14,7 @@ const getUIDFromKey = (key) => {
   return parseInt(Buffer.from(key, "base64"));
 }
 
+// generate random character strings
 const random = (length) => {
   let result = "";
   let characters =

@@ -1,11 +1,8 @@
-// // DEPENDENCIES
-// const WebApp = require("./webserver/index");
-
-// // WEBSERVER
-// const website = new WebApp();
-// website.Run();
-const App = require("./webserver");
+// DEPENDENCIES
 const EasyDB = require("@betadv/easy-db");
+
+// DATABASE
 const Database = new EasyDB(require("./data/db-config"))
 
-App(Database, require("./data/web-config")).run();
+// WEBSERVER
+require("./webserver/index")(Database)
