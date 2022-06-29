@@ -1,14 +1,8 @@
 const fs = require("fs");
-const {
-  join
-} = require("path");
-
-const endpoints = join(__dirname, "../", "endpoints");
+const { join } = require("path");
+const log = require("./log");
+const endpoints = join(__dirname, "..", "endpoints");
 const rootPath = endpoints.split("\\").length;
-
-const {
-  checkAndVerifyKey
-} = require("./authKeyChecker");
 
 const getRoute = (path) => {
   return "/" + path.split("\\").splice(rootPath).join("/").replace(".js", "");
@@ -19,18 +13,18 @@ const walkInFolders = (path, app, database) => {
   if (stat.isDirectory()) {
     const dir = fs.readdirSync(path);
     for (const e of dir) {
-      walkInFolders(join(path, e));
+      walkInFolders(join(path, e), app, database);
     }
   } else if (stat.isFile() && path.endsWith(".js")) {
     const routePath = getRoute(path);
-    const functionData = require(path)(app, database, routePath);
+    // Load the module file
+    require(path)(app, database, routePath);
   };
 
   log.verbose(`Added Route '${route}'`);
-  added++;
 }
 
 module.exports = {
   getRoute,
-  walkInFolders
-}
+  walkInFolders,
+};

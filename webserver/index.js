@@ -1,24 +1,24 @@
 const express = require("express");
 const log = require("./util/log");
-const {
-  walkInFolders,
-  getRoute
-} = require("./util/loadEndpoints");
+const { walkInFolders, getRoute } = require("./util/loadEndpoints");
+
+const fs = require("fs");
+const { join } = require("path");
 
 const config = require("../data/web-config");
 
 const endpoints = join(__dirname, "endpoints");
-const rootPath = endpoints.split("\\").length;
 
 /**
- * 
- * @param {import("@betadv/easy-db")} database 
- * @param {*} config 
+ *
+ * @param {import("@betadv/easy-db")} database
+ * @param {*} config
  */
 module.exports = (database) => {
     const app = express();
     let added = 0;
     app["Routes"] = [];
+    app["No-RequireKey"] = [];
     for (const route of fs.readdirSync(endpoints)) {
       walkInFolders(join(endpoints, route), app, database);
     }
@@ -42,7 +42,5 @@ module.exports = (database) => {
         }
     })
 
-
     return app.listen(config.port, () => log.verbose(`API Listening to port ${config.port}`));
-
-    }
+}

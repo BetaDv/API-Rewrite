@@ -30,5 +30,5 @@ module.exports = {
   keyGen,
   autoGen,
   getUIDFromKey,
-  random
+  random,
 };
