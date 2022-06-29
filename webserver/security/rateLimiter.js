@@ -9,7 +9,7 @@ const apply = (app) => {
   });
 
   // Apply the rate limiting middleware to API calls only
-  app.use("/api", apiLimiter);
+  // app.use("/api", apiLimiter);
 };
 
 module.exports = { apply };

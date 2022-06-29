@@ -1,11 +1,10 @@
 const keymodule = require("./generateKey");
 const checkKey = (db, authKey) => {
-    let key = db.get("key:" + authKey);
+    let key = db.has("key:" + authKey);
   
-    if (authKey === null) return undefined; // None
-    if (key === null) return null; // Invalid
-    if (key.isBlacklisted === true) return false; //Blacklisted
-    return true; // Allowed
+    if (key === false) return "invalid"; // Invalid
+    if (key.isBlacklisted === true) return "blacklisted"; //Blacklisted
+    return "valid"; // Allowed
 };
 
 const findKeyByUID = (db, authKey) => {
@@ -28,19 +27,18 @@ const bodyBlacklisted = {
 }
 
 const checkAndVerifyKey = (db, req, res, next) => {
-    const key = req.headers["Authorization"];
+    const key = req.query["Authorization"];
     const stat = checkKey(db, key);
     switch(stat) {
-        case undefined:
-        case null: {
+        case "invalid": {
             res.status(401).json(bodyUnauthorized);
         }
         break;
-        case false: {
+        case "blacklisted": {
             res.status(403).json(bodyBlacklisted);
         }
         break;
-        case true: {
+        case "valid": {
             next();
         }
         break;

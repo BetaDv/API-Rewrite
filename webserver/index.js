@@ -1,5 +1,5 @@
 const express = require("express");
-const log = require("./util/log");
+const log = require("../generalUtil/log");
 const { walkInFolders, getRoute } = require("./util/loadEndpoints");
 
 const rateLimiter = require("./security/rateLimiter");
@@ -21,9 +21,12 @@ module.exports = (database) => {
   let added;
   app["Routes"] = [];
   app["No-RequireKey"] = [];
-  for (const route of fs.readdirSync(endpoints)) {
+
+	for (const route of fs.readdirSync(endpoints)) {
     added = walkInFolders(join(endpoints, route), app, database);
   }
+	
+  
   log.verbose(`Successfully Added ${added} Routes to API`);
   app.use(
     express.urlencoded({
@@ -49,6 +52,6 @@ module.exports = (database) => {
   });
 
   return app.listen(config.port, () =>
-    log.verbose(`API Listening to port ${config.port}`)
+    log.success(`API Listening to port ${config.port}`)
   );
 };
