@@ -20,7 +20,6 @@ module.exports = (database) => {
   const app = express();
   let added;
   app["Routes"] = [];
-  app["No-RequireKey"] = [];
 
 	for (const route of fs.readdirSync(endpoints)) {
     added = walkInFolders(join(endpoints, route), app, database);

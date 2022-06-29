@@ -7,7 +7,7 @@ module.exports = (app, database) => {
 	return {
 		useAuth: false,
 		requestType: "get",
-		run: async (req, res) => {
+		execute: async (req, res) => {
 			// Do stuff here
 			res.status(200).json({ endpoints: app["Routes"] })
 		}

@@ -1,4 +1,5 @@
 module.exports = {
-  token: "OTkxNzE2OTExMDM5NjQzNjY4.G_-yO-.08R2_BIj1iA0n7LWHdvAV8g2I9pn7pDMjTQd-Q",
-  prefix: "",
+  token: "OTkxNzE2OTExMDM5NjQzNjY4.GNSUAK.tXgWduuqkmKSQiiZVAkGaqqDtZxUjUeKvKg9fY",
+  prefix: "!",
+	developers: ["334224923872460802", "502968724207304714"],
 };

@@ -29,7 +29,7 @@ const walkInFolders = (path, app, database) => {
 				checkAndVerifyKey(database, req, res);
 			}
 
-			return data.run(req, res);
+			return data.execute(req, res);
 		});
 
 		log.verbose(`Added Route '${routePath}'`);
