@@ -34,7 +34,7 @@ module.exports = (database) => {
   app.use(express.json());
   app.set("json spaces", 2);
 
-  rateLimiter.apply();
+  rateLimiter.apply(app);
 
   // Unknown Route
   app.get("*", (req, res) => {
