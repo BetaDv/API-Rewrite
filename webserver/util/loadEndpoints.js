@@ -6,8 +6,9 @@ const rootPath = endpoints.split("\\").length;
 
 const getRoute = (path) => {
   return "/" + path.split("\\").splice(rootPath).join("/").replace(".js", "");
-}
+};
 
+let added = 0;
 const walkInFolders = (path, app, database) => {
   const stat = fs.statSync(path);
   if (stat.isDirectory()) {
@@ -19,10 +20,13 @@ const walkInFolders = (path, app, database) => {
     const routePath = getRoute(path);
     // Load the module file
     require(path)(app, database, routePath);
-  };
 
-  log.verbose(`Added Route '${route}'`);
-}
+    log.verbose(`Added Route '${routePath}'`);
+    added++;
+  }
+
+  return added;
+};
 
 module.exports = {
   getRoute,

@@ -1,8 +1,8 @@
-const autoGen = (db,  UID) => {
+const autoGen = (db, UID) => {
   let genKey = keyGen(UID);
 
-  let mKey = db.set("key:" + genKey, "");
-  return genKey
+  let mKey = db.set("key:" + genKey, UID.toString());
+  return genKey;
 };
 
 // generate a key
@@ -12,13 +12,12 @@ const keyGen = (uid, randomSize = 36) => {
 
 const getUIDFromKey = (key) => {
   return parseInt(Buffer.from(key, "base64"));
-}
+};
 
 // generate random character strings
 const random = (length) => {
   let result = "";
-  let characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
   let charactersLength = characters.length;
   for (let i = 0; i < length; i++) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
