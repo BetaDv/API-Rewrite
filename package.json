@@ -12,7 +12,10 @@
     "url": "git+https://github.com/BetaDv/API-Rewrite.git"
   },
   "keywords": [],
-  "author": "",
+  "authors": [
+    "BetaDv",
+    "Kino7916"
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/BetaDv/API-Rewrite/issues"
