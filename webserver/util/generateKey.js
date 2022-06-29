@@ -1,19 +1,21 @@
 const autoGen = (db, authKey, UID) => {
-  let gKey = keyGen(36, UID);
+  let gKey = keyGen(UID);
 
   let mKey = db.set("key_" + genKey, UID);
   let uKey = db.set("user_" + UID, key);
 };
 
-// Length of 36
-const keyGen = (charCount = 36, uid) => {
-  return [
-    random(charCount / 4),
-    random(charCount / 2),
-    String(uid),
-    random(charCount / 6),
-  ].join("-");
+const keyGen = (uid, randomSize = 36) => {
+  // Length of random is size / 2 = 18
+  const rand = [random(randomSize / 4), random(randomSize / 6), random(randomSize / 12)];
+  return rand.join("") + Buffer.from(uid).toString("base64");
 };
+
+const getUIDFromKey = (key, originalSize = 36) => {
+  // Size 36 / 2 = 18
+  const randlen = originalSize / 4 + originalSize / 6 + originalSize / 12;
+  return Buffer.from(key.slice(randlen), "base64").toString("utf8")
+}
 
 const random = (length) => {
   let result = "";
@@ -29,4 +31,6 @@ const random = (length) => {
 module.exports = {
   keyGen,
   autoGen,
+  getUIDFromKey,
+  random
 };

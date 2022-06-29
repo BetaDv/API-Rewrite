@@ -22,7 +22,7 @@ const body403_bl = {
 };
 
 /**
- * @param {import("../index.js")} app
+ * @param {import("../index_old.js")} app
  */
 function initRouter(app) {
   const router = express.Router();
