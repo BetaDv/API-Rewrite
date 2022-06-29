@@ -5,7 +5,9 @@ const endpoints = join(__dirname, "..", "endpoints");
 const rootPath = endpoints.split("\\").length;
 
 const getRoute = (path) => {
-  return "/" + path.split("\\").splice(rootPath).join("/").replace(".js", "");
+  return (
+    "/api/" + path.split("\\").splice(rootPath).join("/").replace(".js", "")
+  );
 };
 
 let added = 0;

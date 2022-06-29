@@ -2,6 +2,8 @@ const express = require("express");
 const log = require("./util/log");
 const { walkInFolders, getRoute } = require("./util/loadEndpoints");
 
+const rateLimiter = require("./security/rateLimiter");
+
 const fs = require("fs");
 const { join } = require("path");
 
@@ -32,10 +34,12 @@ module.exports = (database) => {
   app.use(express.json());
   app.set("json spaces", 2);
 
+  rateLimiter.apply();
+
   // Unknown Route
   app.get("*", (req, res) => {
     if (req.path === "/help") {
-      res.redirect("/endpoints");
+      res.redirect("/api/endpoints");
       if (!res.headersSent)
         res.status(404).json({
           status: "404",
