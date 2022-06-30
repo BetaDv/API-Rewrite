@@ -7,3 +7,6 @@ Database.load();
 
 // WEBSERVER
 require("./webserver/index")(Database);
+
+// DISCORD BOT
+require("./discordbot/index")(Database);

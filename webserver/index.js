@@ -1,6 +1,8 @@
 const express = require("express");
-const log = require("./util/log");
+const log = require("../generalUtil/log");
 const { walkInFolders, getRoute } = require("./util/loadEndpoints");
+
+const rateLimiter = require("./security/rateLimiter");
 
 const fs = require("fs");
 const { join } = require("path");
@@ -31,7 +33,7 @@ module.exports = (database) => {
     app.set('json spaces', 2);
     // Middlewares
     middlewares.auth(app); // Authorization Middleware
-
+    rateLimiter.apply(app); // Rate Limiter
     // Routes
     for (const route of fs.readdirSync(endpoints)) {
       walkInFolders(join(endpoints, route), app, database);
@@ -47,5 +49,7 @@ module.exports = (database) => {
             res.status(404).json(bodyNotFound);
     })
 
-    return app.listen(config.port, () => log.verbose(`API Listening to port ${config.port}`));
-}
+  return app.listen(config.port, () =>
+    log.success(`API Listening to port ${config.port}`)
+  );
+};

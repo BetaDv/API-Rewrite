@@ -1,7 +1,6 @@
 {
   "name": "api-rewrite",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,7 +11,10 @@
     "url": "git+https://github.com/BetaDv/API-Rewrite.git"
   },
   "keywords": [],
-  "author": "",
+  "authors": [
+    "BetaDv",
+    "Kino7916"
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/BetaDv/API-Rewrite/issues"
@@ -20,10 +22,14 @@
   "homepage": "https://github.com/BetaDv/API-Rewrite#readme",
   "dependencies": {
     "@betadv/easy-db": "^1.0.5",
-    "express": "^4.18.1"
+    "discord.js": "^13.8.1",
+    "express": "^4.18.1",
+    "express-rate-limit": "^6.4.0"
   },
   "devDependencies": {
+    "node": "^16.15.1",
     "nodemon": "^2.0.18",
     "prettier": "^2.7.1"
-  }
+  },
+  "description": "This is Beta-API rewritten and its branding changed."
 }

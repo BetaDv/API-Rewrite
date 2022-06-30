@@ -32,7 +32,7 @@ module.exports = (app, database, route) => {
         }
 
         const key = keymodule.autoGen(database, uid);
-        return res.status(200).json({ key });
+        return res.status(200).json({ key, UID: uid });
     });
 
     app.use(route, router)

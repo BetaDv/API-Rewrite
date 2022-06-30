@@ -1,11 +1,12 @@
 const fs = require("fs");
 const { join } = require("path");
-const log = require("./log");
+const log = require("../../generalUtil/log");
 const endpoints = join(__dirname, "..", "endpoints");
-const rootPath = endpoints.split("\\").length;
+
+const rootPath = endpoints.split("/").length;
 
 const getRoute = (path) => {
-  return "/api/" + path.split("\\").splice(rootPath).join("/").replace(".js", "");
+  return "/" + path.split("\\").splice(rootPath).join("/").replace(".js", "");
 }
 
 const walkInFolders = (path, app, database) => {
@@ -25,6 +26,6 @@ const walkInFolders = (path, app, database) => {
 }
 
 module.exports = {
-  getRoute,
-  walkInFolders,
+	getRoute,
+	walkInFolders,
 };
