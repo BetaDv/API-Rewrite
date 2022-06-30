@@ -1,5 +1,4 @@
 const checkmodule = require("../util/keycheck");
-const { verbose } = require("../util/log");
 
 module.exports = (app) => {
   app.use(async (req, res, next) => {
