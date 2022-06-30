@@ -5,7 +5,7 @@ const endpoints = join(__dirname, "..", "endpoints");
 const rootPath = endpoints.split("\\").length;
 
 const getRoute = (path) => {
-  return "/" + path.split("\\").splice(rootPath).join("/").replace(".js", "");
+  return "/api/" + path.split("\\").splice(rootPath).join("/").replace(".js", "");
 }
 
 const walkInFolders = (path, app, database) => {
@@ -19,9 +19,9 @@ const walkInFolders = (path, app, database) => {
     const routePath = getRoute(path);
     // Load the module file
     require(path)(app, database, routePath);
+    app["AddedRoutes"]++;
+    log.verbose(`File handled route '${routePath}'`);
   };
-
-  log.verbose(`Added Route '${route}'`);
 }
 
 module.exports = {

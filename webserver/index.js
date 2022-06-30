@@ -4,8 +4,10 @@ const { walkInFolders, getRoute } = require("./util/loadEndpoints");
 
 const fs = require("fs");
 const { join } = require("path");
+const middlewares = require("./middlewares")
 
 const config = require("../data/web-config");
+const { bodyNotFound } = require("./util/errors");
 
 const endpoints = join(__dirname, "endpoints");
 
@@ -16,30 +18,33 @@ const endpoints = join(__dirname, "endpoints");
  */
 module.exports = (database) => {
     const app = express();
-    let added = 0;
     app["Routes"] = [];
     app["No-RequireKey"] = [];
-    for (const route of fs.readdirSync(endpoints)) {
-      walkInFolders(join(endpoints, route), app, database);
-    }
-    log.verbose(`Successfully Added ${added} Routes to API`);
+    app["AddedRoutes"] = 0;
+    app["database"] = database;
+    app["config"] = config;
     app.use(express.urlencoded({
       extended: false,
       limit: "3mb"
     }));
     app.use(express.json());
-    app.set('json spaces', 2)
+    app.set('json spaces', 2);
+    // Middlewares
+    middlewares.auth(app); // Authorization Middleware
+
+    // Routes
+    for (const route of fs.readdirSync(endpoints)) {
+      walkInFolders(join(endpoints, route), app, database);
+    }
+    log.success(`Finished loading ${app["AddedRoutes"]} Routes`);
 
     // Unknown Route
     app.get("*", (req, res) => {
         if (req.path === "/help") {
           res.redirect("/endpoints");
-          if (!res.headersSent)
-            res.status(404).json({
-              status: "404",
-              message: "Page Not Found"
-            });
         }
+        if (!res.headersSent)
+            res.status(404).json(bodyNotFound);
     })
 
     return app.listen(config.port, () => log.verbose(`API Listening to port ${config.port}`));

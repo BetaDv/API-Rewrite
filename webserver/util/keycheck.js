@@ -1,45 +1,37 @@
 const keymodule = require("./generateKey");
-const checkKey = (db, authKey) => {
-    let key = db.get("key:" + authKey);
-  
-    if (authKey === null) return undefined; // None
-    if (key === null) return null; // Invalid
-    if (key.isBlacklisted === true) return false; //Blacklisted
+const checkKey = (authKey) => {
+    if (!authKey) return undefined;
+    if (authKey.isBlacklisted === true) return false; //Blacklisted
     return true; // Allowed
 };
 
-const findKeyByUID = (db, authKey) => {
-    const enc = Buffer.from(keymodule.getUIDFromKey(authKey)).toString("base64");
-    return db.startsWith(`key:${enc}`);
+const getKeyData = (db, authKey) => {
+    return db.get("key:" + authKey);
+}
+
+const findKeyByUID = (db, uid) => {
+    const enc = Buffer.from(uid).toString("base64");
+    return db.startsWith(`key:${enc}`)?.[0];
 }
 
 // ERRORS
-const bodyUnauthorized = {
-    message: "Authorization ( API KEY ) is invalid or unknown",
-    serverCode: "Unauthorized",
-    status: "401 - Unauthorized",
-    statusCode: 401,
-}
-const bodyBlacklisted = {
-    message: "Your API Key has been blacklisted from our api",
-    serverCode: "Blacklisted",
-    status: "403 - Forbidden",
-    statusCode: 403,
-}
+const Errors = require("./errors");
 
 const checkAndVerifyKey = (db, req, res, next) => {
     const key = req.headers["Authorization"];
-    const stat = checkKey(db, key);
+    const stat = checkKey(getKeyData(db, key));
     switch(stat) {
-        case undefined:
-        case null: {
-            res.status(401).json(bodyUnauthorized);
+        // None / Invalid
+        case undefined:{
+            res.status(401).json(Errors.bodyUnauthorized);
         }
         break;
+        // Blacklisted
         case false: {
-            res.status(403).json(bodyBlacklisted);
+            res.status(403).json(Errors.bodyBlacklisted);
         }
         break;
+        // Allowed
         case true: {
             next();
         }

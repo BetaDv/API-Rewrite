@@ -4,3 +4,4 @@ const keyUid = mod.getUIDFromKey(key);
 
 console.log("Key:", key);
 console.log("UID:", keyUid)
+console.log(mod.random(48))

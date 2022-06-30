@@ -1,7 +1,7 @@
 const autoGen = (db,  UID) => {
   let genKey = keyGen(UID);
 
-  let mKey = db.set("key:" + genKey, "");
+  let mKey = db.set("key:" + genKey, "none");
   return genKey
 };
 
